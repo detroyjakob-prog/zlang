@@ -10,6 +10,7 @@ Rules that hold everywhere:
 - Types are always optional.
 
 ## Contents
+0. Quick Start
 1. Program Structure
 2. Comments
 3. Values and Types
@@ -33,6 +34,41 @@ Rules that hold everywhere:
 21. Complete Example
 
 ---
+## 0. Quick Start
+Clone the repository!
+```bash
+git clone https://detroyjakob-prog/zlang.git
+```
+
+Install Cargo/Rust/Rustup
+```bash
+sudo pacman -S --needed --noconfirm rustup
+```
+
+Set default toolchain
+```bash
+rustup default nightly
+```
+
+Build!
+```bash
+cd zlang
+cargo build # --release 
+```
+
+Install globally.
+```bash
+cd target/release
+cp zlang z
+sudo install z /usr/bin
+```
+Have FUN!
+
+Or verify...
+```bash
+z --version
+z --help
+```
 
 ## 1. Program Structure
 
