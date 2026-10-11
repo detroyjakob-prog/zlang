@@ -37,7 +37,7 @@ Rules that hold everywhere:
 ## 0. Quick Start
 Clone the repository!
 ```bash
-git clone https://detroyjakob-prog/zlang.git
+git clone https://github.com/detroyjakob-prog/zlang.git
 ```
 
 Install Cargo/Rust/Rustup
