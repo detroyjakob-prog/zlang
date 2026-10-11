@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Z — A keyword-driven programming language</title>
+  <meta name="description" content="Z is a keyword-driven programming language. Every action is introduced by an explicit keyword. Blocks use braces, types are optional, and nothing is hidden." />
+  <link rel="icon" type="image/svg+xml" href="assets/z-mark.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="bg-field"></div>
+  <div class="bg-grid"></div>
+
+  <!-- ===================== NAV ===================== -->
+  <header class="nav" id="nav">
+    <div class="wrap nav-inner">
+      <a class="brand" href="#top" aria-label="Z home">
+        <img src="assets/z-mark.svg" alt="" class="mark" />
+        <span>Z</span>
+        <span class="ver">v0.2.0</span>
+      </a>
+      <nav class="nav-links">
+        <a href="#features">Features</a>
+        <a href="#syntax">Syntax</a>
+        <a href="#tour">Tour</a>
+        <a href="#cli">CLI</a>
+        <a href="#start">Get started</a>
+      </nav>
+      <div class="nav-cta">
+        <a class="btn btn-ghost" href="https://github.com/detroyjakob-prog/zlang" target="_blank" rel="noopener">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5C5.73.5.5 5.73.5 12c0 5.08 3.29 9.39 7.86 10.91.58.11.79-.25.79-.55v-2.1c-3.2.7-3.88-1.36-3.88-1.36-.53-1.34-1.29-1.7-1.29-1.7-1.05-.72.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.04 1.78 2.72 1.27 3.38.97.11-.76.41-1.27.74-1.56-2.55-.29-5.23-1.28-5.23-5.69 0-1.26.45-2.29 1.19-3.1-.12-.29-.52-1.46.11-3.05 0 0 .96-.31 3.15 1.18a10.9 10.9 0 0 1 5.74 0c2.18-1.49 3.14-1.18 3.14-1.18.63 1.59.23 2.76.12 3.05.74.81 1.18 1.84 1.18 3.1 0 4.42-2.69 5.39-5.25 5.68.42.36.79 1.07.79 2.16v3.2c0 .31.21.67.8.55A11.51 11.51 0 0 0 23.5 12C23.5 5.73 18.27.5 12 .5z"/></svg>
+          GitHub
+        </a>
+        <a class="btn btn-primary" href="#start">Get started</a>
+        <button class="menu-toggle" id="menuToggle" aria-label="Menu">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+        </button>
+      </div>
+    </div>
+    <div class="mobile-menu" id="mobileMenu">
+      <a href="#features">Features</a>
+      <a href="#syntax">Syntax</a>
+      <a href="#tour">Tour</a>
+      <a href="#cli">CLI</a>
+      <a href="#start">Get started</a>
+    </div>
+  </header>
+
+  <main id="top">
+    <!-- ===================== HERO ===================== -->
+    <section class="hero">
+      <div class="wrap hero-grid">
+        <div>
+          <div class="hero-badge"><span class="dot"></span> v0.2.0 — now with classes, async &amp; more</div>
+          <h1>Every action,<br /><span class="kw gradient-text">explicit.</span></h1>
+          <p class="lead">
+            Z is a <b>keyword-driven</b> language. Nothing is hidden behind symbols —
+            you <b><code style="color:var(--cyan)">call</code></b> a function,
+            <b><code style="color:var(--cyan)">abl</code></b> a variable,
+            <b><code style="color:var(--cyan)">callclass</code></b> a method.
+            Braces delimit blocks, types are optional, and there are no semicolons.
+          </p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#start">
+              Start writing Z
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            </a>
+            <a class="btn btn-ghost" href="#syntax">See the syntax</a>
+          </div>
+          <div class="install">
+            <span class="prompt">z❯</span>
+            <code id="installCmd">git clone https://github.com/detroyjakob-prog/zlang.git</code>
+            <button class="copy-btn" id="copyBtn" aria-label="Copy install command">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>
+            </button>
+          </div>
+        </div>
+
+        <!-- Animated terminal -->
+        <div class="term" aria-hidden="true">
+          <div class="term-bar">
+            <div class="lights"><span class="r"></span><span class="y"></span><span class="g"></span></div>
+            <span class="title">hello.z — zsh</span>
+            <span class="tab">z repl</span>
+          </div>
+          <div class="term-body" id="termBody"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== FACTS STRIP ===================== -->
+    <section class="facts">
+      <div class="facts-inner">
+        <div class="fact reveal"><div class="num">0<span>.</span>2<span>.</span>0</div><div class="lbl">current version</div></div>
+        <div class="fact reveal"><div class="num">0 <span>deps</span></div><div class="lbl">zero dependencies</div></div>
+        <div class="fact reveal"><div class="num">6<span>+</span></div><div class="lbl">std libraries</div></div>
+        <div class="fact reveal"><div class="num"><span>~</span>60</div><div class="lbl">reserved words</div></div>
+      </div>
+    </section>
+
+    <!-- ===================== FEATURES ===================== -->
+    <section class="section" id="features">
+      <div class="wrap">
+        <span class="eyebrow reveal">Why Z</span>
+        <h2 class="section-title reveal">A language that says what it means.</h2>
+        <p class="section-sub reveal">Z trades cryptic punctuation for plain keywords. The result reads almost like prose — and never surprises you with hidden behavior.</p>
+
+        <div class="features-grid">
+          <div class="card reveal">
+            <div class="icon">{ }</div>
+            <h3>Keyword-driven by design</h3>
+            <p>Every action starts with a keyword: <code>call</code>, <code>callclass</code>, <code>abl</code>, <code>callerror</code>. If you can read it, you understand it.</p>
+          </div>
+          <div class="card reveal">
+            <div class="icon">: T</div>
+            <h3>Types, optional</h3>
+            <p>Write <code>abl int y = 2</code> or just <code>abl y = 2</code>. Types are a tool, never a tax — annotate when it helps.</p>
+          </div>
+          <div class="card reveal">
+            <div class="icon">;</div>
+            <h3>No semicolons</h3>
+            <p>Newlines end statements. Braces <code>{ }</code> delimit blocks. Clean, consistent, and free of line-end noise.</p>
+          </div>
+          <div class="card reveal">
+            <div class="icon">fn</div>
+            <h3>First-class functions</h3>
+            <p>Lambdas, closures, and generators are built in. <code>fn(x) =&gt; x + 1</code> is a value you can pass around.</p>
+          </div>
+          <div class="card reveal">
+            <div class="icon">⬡</div>
+            <h3>Classes &amp; objects</h3>
+            <p>Inheritance with <code>super</code>, dunder-style methods, enums, and privacy by convention with a leading <code>_</code>.</p>
+          </div>
+          <div class="card reveal">
+            <div class="icon">↻</div>
+            <h3>Async &amp; concurrency</h3>
+            <p>Mark a function <code>async fn</code>, await calls, and fan out work with <code>gather</code>. Non-blocking by default.</p>
+          </div>
+          <div class="card reveal">
+            <div class="icon">⌸</div>
+            <h3>Batteries included</h3>
+            <p>Standard libraries for <code>math</code>, <code>random</code>, <code>time</code>, <code>files</code>, <code>json</code>, <code>os</code> and strings.</p>
+          </div>
+          <div class="card reveal">
+            <div class="icon">✓</div>
+            <h3>Garbage collected</h3>
+            <p>Memory is managed automatically. Reference types share references; scalars stay immutable and safe.</p>
+          </div>
+          <div class="card reveal">
+            <div class="icon">⧉</div>
+            <h3>Standalone builds</h3>
+            <p><code>z build file.z</code> emits a single self-contained executable with your program appended to it.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== SYNTAX SHOWCASE ===================== -->
+    <section class="section" id="syntax" style="padding-top:24px">
+      <div class="wrap split">
+        <div class="reveal">
+          <span class="eyebrow">Readable by default</span>
+          <h2 class="section-title">Syntax you can read out loud.</h2>
+          <p class="section-sub" style="margin-bottom:8px">Compare a familiar snippet with Z's spelling. Same logic — but every step announces itself.</p>
+          <ul class="check-list">
+            <li><span class="ck">✓</span><span><b>Declare</b> a variable with <code>abl</code> — one keyword, no ceremony.</span></li>
+            <li><span class="ck">✓</span><span><b>Call</b> a function with <code>call</code>, a method with <code>callclass</code>.</span></li>
+            <li><span class="ck">✓</span><span><b>Raise</b> errors with <code>callerror</code> — explicit and greppable.</span></li>
+            <li><span class="ck">✓</span><span><b>Blocks</b> use <code>{ }</code>, conditions wrap in optional parens.</span></li>
+          </ul>
+        </div>
+        <div class="code-panel reveal">
+          <div class="code-head"><span style="color:var(--cyan)">●</span><span class="fname">greet.z</span></div>
+          <pre><code><span class="tok-cmt">// every action is a keyword</span>
+<span class="tok-kw">fn</span> <span class="tok-fn">Greet</span>(name) {
+    <span class="tok-kw">abl</span> greeting = <span class="tok-str">f"Hello {name}!"</span>
+    <span class="tok-kw">call</span> <span class="tok-fn">printer</span>(greeting)
+}
+
+<span class="tok-kw">fn</span> <span class="tok-fn">Main</span>() {
+    <span class="tok-kw">abl</span> names = [<span class="tok-str">"Ada"</span>, <span class="tok-str">"Zed"</span>]
+    <span class="tok-kw">for</span> n <span class="tok-kw">in</span> names {
+        <span class="tok-kw">call</span> <span class="tok-fn">Greet</span>(n)
+    }
+    <span class="tok-kw">try</span> {
+        <span class="tok-kw">abl</span> x = <span class="tok-kw">call</span> <span class="tok-fn">int</span>(<span class="tok-str">"oops"</span>)
+    } <span class="tok-kw">except</span> ValueError <span class="tok-kw">as</span> e {
+        <span class="tok-kw">call</span> <span class="tok-fn">printer</span>(<span class="tok-str">f"Caught: {e}"</span>)
+    }
+}</code></pre>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== LANGUAGE TOUR (TABS) ===================== -->
+    <section class="section" id="tour" style="padding-top:24px">
+      <div class="wrap">
+        <span class="eyebrow reveal">The tour</span>
+        <h2 class="section-title reveal">Familiar power, spelled out.</h2>
+        <p class="section-sub reveal">From control flow to classes and async — here's how everyday patterns look in Z. Click through the tabs.</p>
+
+        <div class="tabs reveal">
+          <div class="tab-btns">
+            <button class="tab-btn active" data-tab="t-control">Control flow</button>
+            <button class="tab-btn" data-tab="t-classes">Classes</button>
+            <button class="tab-btn" data-tab="t-funcs">Functions</button>
+            <button class="tab-btn" data-tab="t-async">Async</button>
+          </div>
+
+          <div class="tab-panel active" id="t-control">
+            <div class="code-panel">
+              <div class="code-head"><span style="color:var(--cyan)">●</span><span class="fname">control.z</span></div>
+              <pre><code><span class="tok-kw">abl</span> score = <span class="tok-num">92</span>
+
+<span class="tok-kw">if</span> score &gt;= <span class="tok-num">90</span> {
+    <span class="tok-kw">call</span> <span class="tok-fn">printer</span>(<span class="tok-str">"A"</span>)
+} <span class="tok-kw">elif</span> score &gt;= <span class="tok-num">80</span> {
+    <span class="tok-kw">call</span> <span class="tok-fn">printer</span>(<span class="tok-str">"B"</span>)
+} <span class="tok-kw">else</span> {
+    <span class="tok-kw">call</span> <span class="tok-fn">printer</span>(<span class="tok-str">"C"</span>)
+}
+
+<span class="tok-kw">match</span> <span class="tok-str">"stop"</span> {
+    <span class="tok-kw">case</span> <span class="tok-str">"start"</span> { <span class="tok-kw">call</span> <span class="tok-fn">printer</span>(<span class="tok-str">"go"</span>) }
+    <span class="tok-kw">case</span> <span class="tok-str">"stop"</span>, <span class="tok-str">"quit"</span> { <span class="tok-kw">call</span> <span class="tok-fn">printer</span>(<span class="tok-str">"halt"</span>) }
+    <span class="tok-kw">case</span> _ { <span class="tok-kw">call</span> <span class="tok-fn">printer</span>(<span class="tok-str">"?"</span>) }
+}
+
+<span class="tok-cmt">// comprehensions &amp; closures</span>
+<span class="tok-kw">abl</span> squares = [x * x <span class="tok-kw">for</span> x <span class="tok-kw">in</span> <span class="tok-kw">call</span> <span class="tok-fn">range</span>(<span class="tok-num">6</span>)]
+<span class="tok-kw">abl</span> double = <span class="tok-kw">fn</span>(x) =&gt; x * <span class="tok-num">2</span></code></pre>
+            </div>
+          </div>
+
+          <div class="tab-panel" id="t-classes">
+            <div class="code-panel">
+              <div class="code-head"><span style="color:var(--cyan)">●</span><span class="fname">shapes.z</span></div>
+              <pre><code><span class="tok-kw2">Shape</span> {
+    <span class="tok-kw">fn</span> <span class="tok-fn">init</span>(<span class="tok-kw2">self</span>, name) { <span class="tok-kw2">self</span>.name = name }
+
+    <span class="tok-kw">fn</span> <span class="tok-fn">Area</span>(<span class="tok-kw2">self</span>) {
+        <span class="tok-kw">return</span> <span class="tok-num">0</span>
+    }
+}
+
+<span class="tok-kw2">Circle</span>(<span class="tok-kw2">Shape</span>) {
+    <span class="tok-kw">fn</span> <span class="tok-fn">init</span>(<span class="tok-kw2">self</span>, r) {
+        <span class="tok-kw">callclass</span> <span class="tok-kw2">super</span>.<span class="tok-fn">init</span>(<span class="tok-str">"circle"</span>)
+        <span class="tok-kw2">self</span>.r = r
+    }
+
+    <span class="tok-kw">fn</span> <span class="tok-fn">Area</span>(<span class="tok-kw2">self</span>) {
+        <span class="tok-kw">return</span> <span class="tok-num">3.14159</span> * <span class="tok-kw2">self</span>.r ** <span class="tok-num">2</span>
+    }
+}
+
+<span class="tok-kw">abl</span> c = <span class="tok-kw">callclass</span> <span class="tok-kw2">Circle</span>(<span class="tok-num">2</span>)
+<span class="tok-kw">call</span> <span class="tok-fn">printer</span>(c)</code></pre>
+            </div>
+          </div>
+
+          <div class="tab-panel" id="t-funcs">
+            <div class="code-panel">
+              <div class="code-head"><span style="color:var(--cyan)">●</span><span class="fname">funcs.z</span></div>
+              <pre><code><span class="tok-cmt">// closures capture their environment</span>
+<span class="tok-kw">fn</span> <span class="tok-fn">MakeCounter</span>(start) {
+    <span class="tok-kw">abl</span> count = start
+    <span class="tok-kw">fn</span> <span class="tok-fn">Step</span>() {
+        <span class="tok-kw">outer</span> count
+        count += <span class="tok-num">1</span>
+        <span class="tok-kw">return</span> count
+    }
+    <span class="tok-kw">return</span> Step
+}
+
+<span class="tok-cmt">// generators with yield</span>
+<span class="tok-kw">fn</span> <span class="tok-fn">Countdown</span>(n) {
+    <span class="tok-kw">while</span> n &gt; <span class="tok-num">0</span> {
+        <span class="tok-kw">yield</span> n
+        n -= <span class="tok-num">1</span>
+    }
+}
+
+<span class="tok-kw">abl</span> next = <span class="tok-kw">call</span> <span class="tok-fn">MakeCounter</span>(<span class="tok-num">10</span>)
+<span class="tok-kw">for</span> v <span class="tok-kw">in</span> <span class="tok-kw">call</span> <span class="tok-fn">Countdown</span>(<span class="tok-num">3</span>) {
+    <span class="tok-kw">call</span> <span class="tok-fn">printer</span>(v)
+}</code></pre>
+            </div>
+          </div>
+
+          <div class="tab-panel" id="t-async">
+            <div class="code-panel">
+              <div class="code-head"><span style="color:var(--cyan)">●</span><span class="fname">async.z</span></div>
+              <pre><code><span class="tok-kw">async fn</span> <span class="tok-fn">Fetch</span>(url) {
+    <span class="tok-kw">abl</span> data = <span class="tok-kw">await</span> <span class="tok-kw">call</span> http.<span class="tok-fn">get</span>(url)
+    <span class="tok-kw">return</span> data
+}
+
+<span class="tok-kw">async fn</span> <span class="tok-fn">Main</span>() {
+    <span class="tok-kw">abl</span> one = <span class="tok-kw">await</span> <span class="tok-kw">call</span> <span class="tok-fn">Fetch</span>(<span class="tok-str">"one"</span>)
+
+    <span class="tok-cmt">// run several calls together</span>
+    <span class="tok-kw">abl</span> results = <span class="tok-kw">await</span> <span class="tok-kw">call</span> <span class="tok-fn">gather</span>(
+        <span class="tok-kw">call</span> <span class="tok-fn">Fetch</span>(<span class="tok-str">"one"</span>),
+        <span class="tok-kw">call</span> <span class="tok-fn">Fetch</span>(<span class="tok-str">"two"</span>)
+    )
+}
+
+<span class="tok-cmt">// await is only valid inside async fn</span></code></pre>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== CLI ===================== -->
+    <section class="section" id="cli" style="padding-top:24px">
+      <div class="wrap">
+        <span class="eyebrow reveal">The toolchain</span>
+        <h2 class="section-title reveal">One command, <span class="gradient-text">z</span>.</h2>
+        <p class="section-sub reveal">A single, dependency-free binary compiles and runs your programs. Everything is a subcommand.</p>
+
+        <div class="cli-grid">
+          <div class="cli-row reveal"><span class="cmdname">z run <span class="arg">file.z</span></span><span class="desc">Run a program</span></div>
+          <div class="cli-row reveal"><span class="cmdname">z check <span class="arg">file.z</span></span><span class="desc">Check syntax without running</span></div>
+          <div class="cli-row reveal"><span class="cmdname">z build <span class="arg">file.z</span></span><span class="desc">Build a standalone executable</span></div>
+          <div class="cli-row reveal"><span class="cmdname">z repl</span><span class="desc">Start the interactive prompt</span></div>
+          <div class="cli-row reveal"><span class="cmdname">z --version</span><span class="desc">Print the version</span></div>
+          <div class="cli-row reveal"><span class="cmdname">z help</span><span class="desc">Show usage and all commands</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== GET STARTED ===================== -->
+    <section class="section" id="start" style="padding-top:24px">
+      <div class="wrap">
+        <span class="eyebrow reveal">Get started</span>
+        <h2 class="section-title reveal">From zero to <span class="gradient-text">Hello, Z!</span> in three steps.</h2>
+        <p class="section-sub reveal">Install Rust, build the toolchain, and run your first program.</p>
+
+        <div class="steps">
+          <div class="step reveal">
+            <div class="n">1</div>
+            <h4>Install Rust</h4>
+            <p>Z is built with a nightly toolchain via rustup. Grab it and set the default:</p>
+            <div class="mini-code"><span class="p">$</span> rustup toolchain install nightly<br /><span class="p">$</span> rustup default nightly</div>
+          </div>
+          <div class="step reveal">
+            <div class="n">2</div>
+            <h4>Build Z</h4>
+            <p>Clone the repository and compile the release binary:</p>
+            <div class="mini-code"><span class="p">$</span> git clone <span class="kw">…/zlang.git</span><br /><span class="p">$</span> cd zlang &amp;&amp; cargo build --release</div>
+          </div>
+          <div class="step reveal">
+            <div class="n">3</div>
+            <h4>Run it</h4>
+            <p>Write a program and run it with the <span style="color:var(--cyan)">z</span> binary:</p>
+            <div class="mini-code"><span class="p">$</span> z run hello.z<br /><span class="out">Hello, Z!</span></div>
+          </div>
+        </div>
+
+        <div class="cta-band reveal">
+          <h2>Write code that reads the way you think.</h2>
+          <p>Z is open source and ready to explore. Clone it, break it, build something explicit.</p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="https://github.com/detroyjakob-prog/zlang" target="_blank" rel="noopener">
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5C5.73.5.5 5.73.5 12c0 5.08 3.29 9.39 7.86 10.91.58.11.79-.25.79-.55v-2.1c-3.2.7-3.88-1.36-3.88-1.36-.53-1.34-1.29-1.7-1.29-1.7-1.05-.72.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.04 1.78 2.72 1.27 3.38.97.11-.76.41-1.27.74-1.56-2.55-.29-5.23-1.28-5.23-5.69 0-1.26.45-2.29 1.19-3.1-.12-.29-.52-1.46.11-3.05 0 0 .96-.31 3.15 1.18a10.9 10.9 0 0 1 5.74 0c2.18-1.49 3.14-1.18 3.14-1.18.63 1.59.23 2.76.12 3.05.74.81 1.18 1.84 1.18 3.1 0 4.42-2.69 5.39-5.25 5.68.42.36.79 1.07.79 2.16v3.2c0 .31.21.67.8.55A11.51 11.51 0 0 0 23.5 12C23.5 5.73 18.27.5 12 .5z"/></svg>
+              View on GitHub
+            </a>
+            <a class="btn btn-ghost" href="#syntax">Read the docs</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ===================== FOOTER ===================== -->
+  <footer>
+    <div class="wrap">
+      <div class="foot-grid">
+        <a class="foot-brand" href="#top">
+          <img src="assets/z-mark.svg" alt="" class="mark" />
+          <span>Z Programming Language</span>
+        </a>
+        <nav class="foot-links">
+          <a href="#features">Features</a>
+          <a href="#syntax">Syntax</a>
+          <a href="#tour">Tour</a>
+          <a href="#cli">CLI</a>
+          <a href="https://github.com/detroyjakob-prog/zlang" target="_blank" rel="noopener">GitHub</a>
+        </nav>
+      </div>
+      <div class="foot-note">
+        <span>Built for the love of explicit code. <code>z ❯</code></span>
+        <span>© 2026 Z Programming Language · v0.2.0</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
+
+
+
